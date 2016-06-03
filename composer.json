@@ -28,5 +28,10 @@
     "psr-0": {
       "Kuborgh\\GitHook": ""
     }
+  },
+  "scripts": {
+    "post-package-install": [
+      "Kuborgh\\GitHook\\ComposerInstaller::postPackageInstall"
+    ]
   }
 }
