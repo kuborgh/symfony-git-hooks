@@ -1,0 +1,27 @@
+{
+  "name": "kuborgh/symfony-git-hooks",
+  "type": "library",
+  "description": "A collection of git hooks, used in symfony projects.",
+  "keywords": [
+    "library",
+    "git",
+    "hook",
+    "phpcs",
+    "code style",
+    "symfony"
+  ],
+  "homepage": "https://github.com/kuborgh/symfony-git-hooks",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hannes Giesenow",
+      "email": "hgiesenow@kuborgh.de"
+    }
+  ],
+  "require": {
+    "symfony/yaml": "~2.8"
+  },
+  "require-dev": {
+    "escapestudios/symfony2-coding-standard": "^2.9"
+  }
+}
