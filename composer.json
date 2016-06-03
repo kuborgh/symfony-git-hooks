@@ -23,5 +23,10 @@
   },
   "require-dev": {
     "escapestudios/symfony2-coding-standard": "^2.9"
+  },
+  "autoload": {
+    "psr-0": {
+      "Kuborgh\\GitHook": ""
+    }
   }
 }
