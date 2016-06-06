@@ -3,6 +3,7 @@
 namespace Kuborgh\GitHook;
 
 use Composer\DependencyResolver\Operation\InstallOperation;
+use Composer\DependencyResolver\Operation\UpdateOperation;
 use Composer\Installer\PackageEvent;
 
 /**
@@ -16,14 +17,19 @@ class ComposerInstaller extends AbstractHook
      */
     public static function installHooks(PackageEvent $event)
     {
+        // Check if hooks package was changed/added
         $operation = $event->getOperation();
-        if (! $operation instanceof InstallOperation) {
+        if ($operation instanceof InstallOperation) {
+            $installedPackage = $operation->getPackage();
+        } elseif($operation instanceof UpdateOperation) {
+            $installedPackage = $operation->getTargetPackage();
+        } else {
             return;
         }
-        $installedPackage = $operation->getPackage();
         if (!preg_match('/^kuborgh\/symfony-git-hooks/', $installedPackage)) {
             return;
         }
+        
         echo ("Install git hooks \n");
         $gitDir = self::getGitBaseDir();
         $dst = $gitDir.'/hooks/';
