@@ -13,12 +13,14 @@ class ComposerInstaller
     public static function postPackageInstall(PackageEvent $event)
     {
         $operation = $event->getOperation();
-        if ($operation instanceof InstallOperation) {
-            $installedPackage = $operation->getPackage();
-        } else {
-            $installedPackage = 'unknown';
+        if (! $operation instanceof InstallOperation) {
+            return;
         }
-        echo ('Installed package '.$installedPackage);
+        $installedPackage = $operation->getPackage();
+        if (!preg_match('/^kuborgh\/symfony-git-hooks/', $installedPackage)) {
+            return;
+        }
+        echo ("Installed git hooks \n");
         // @todo
         // do stuff
     }
