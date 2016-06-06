@@ -29,13 +29,16 @@ class ComposerInstaller extends AbstractHook
         if (!preg_match('/^kuborgh\/symfony-git-hooks/', $installedPackage)) {
             return;
         }
-        
+
         echo ("Install git hooks \n");
+        $srcDir = realpath(__DIR__.'/../../hooks');
         $gitDir = self::getGitBaseDir();
-        $dst = $gitDir.'/hooks/';
-        $src = realpath(__DIR__.'/../../hooks');
-        echo $src .' => '.$dst."\n";
-        // @todo
-        // do stuff
+        $dstDir = $gitDir.'/.git/hooks/';
+        foreach(glob($srcDir.'/*') as $srcHook) {
+            copy($srcHook, $dstDir);
+            $dstHook = $dstDir.basename($srcHook);
+            chmod($dstHook, 'a+x');
+            echo $srcHook .' => '.$dstHook."\n";
+        }
     }
 }
