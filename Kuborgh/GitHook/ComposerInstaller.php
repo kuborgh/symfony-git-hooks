@@ -2,6 +2,7 @@
 
 namespace Kuborgh\GitHook;
 
+use Composer\DependencyResolver\Operation\InstallOperation;
 use Composer\Installer\PackageEvent;
 
 /**
@@ -11,7 +12,13 @@ class ComposerInstaller
 {
     public static function postPackageInstall(PackageEvent $event)
     {
-        $installedPackage = $event->getOperation()->getPackage();
+        $operation = $event->getOperation();
+        if ($operation instanceof InstallOperation) {
+            $installedPackage = $operation->getPackage();
+        } else {
+            $installedPackage = 'unknown';
+        }
+        echo ('Installed package '.$installedPackage);
         // @todo
         // do stuff
     }
