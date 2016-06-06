@@ -37,7 +37,7 @@ class ComposerInstaller extends AbstractHook
         foreach(glob($srcDir.'/*') as $srcHook) {
             $dstHook = $dstDir.basename($srcHook);
             copy($srcHook, $dstHook);
-            chmod($dstHook, 'a+x');
+            chmod($dstHook, 0755);
             echo $srcHook .' => '.$dstHook."\n";
         }
     }
