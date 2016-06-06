@@ -35,8 +35,8 @@ class ComposerInstaller extends AbstractHook
         $gitDir = self::getGitBaseDir();
         $dstDir = $gitDir.'/.git/hooks/';
         foreach(glob($srcDir.'/*') as $srcHook) {
-            copy($srcHook, $dstDir);
             $dstHook = $dstDir.basename($srcHook);
+            copy($srcHook, $dstHook);
             chmod($dstHook, 'a+x');
             echo $srcHook .' => '.$dstHook."\n";
         }
