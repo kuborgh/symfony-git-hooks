@@ -8,9 +8,13 @@ use Composer\Installer\PackageEvent;
 /**
  * Installation routine for composer
  */
-class ComposerInstaller
+class ComposerInstaller extends AbstractHook
 {
-    public static function postPackageInstall(PackageEvent $event)
+    /**
+     * Install hooks after package was installed or updated
+     * @param PackageEvent $event
+     */
+    public static function installHooks(PackageEvent $event)
     {
         $operation = $event->getOperation();
         if (! $operation instanceof InstallOperation) {
@@ -20,7 +24,11 @@ class ComposerInstaller
         if (!preg_match('/^kuborgh\/symfony-git-hooks/', $installedPackage)) {
             return;
         }
-        echo ("Installed git hooks \n");
+        echo ("Install git hooks \n");
+        $gitDir = self::getGitBaseDir();
+        $dst = $gitDir.'/hooks/';
+        $src = realpath(__DIR__.'/../../hooks');
+        echo $src .' => '.$dst."\n";
         // @todo
         // do stuff
     }

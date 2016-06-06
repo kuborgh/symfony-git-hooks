@@ -43,7 +43,7 @@ abstract class AbstractHook
      * @return string
      * @throws \Exception
      */
-    protected function getGitBaseDir()
+    protected static function getGitBaseDir()
     {
         $gitBaseDir = realpath(__DIR__.'/../../../../../');
         while (!file_exists($gitBaseDir.'/.git')) {
