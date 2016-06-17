@@ -6,7 +6,8 @@
  * You can skip these tests with "git commit -n"
  */
 
-require __DIR__.'/../../../autoload.php';
+$vendorFolder = getVendorFolder();
+require $vendorFolder.'/autoload.php';
 
 // Check only staged files to be commited.
 exec(sprintf('git diff-index --cached --name-only HEAD'), $files);
@@ -30,3 +31,26 @@ if ($numErrors) {
     exit(1);
 }
 exit(0);
+
+/**
+ * @return string
+ */
+function getVendorFolder()
+{
+    $vendorFolder = realpath(__DIR__.'/../../');
+    do {
+        // Check for a symfony subfolder
+        if (file_exists($vendorFolder.'/symfony/vendor')) {
+            return $vendorFolder.'/symfony/vendor';
+        }
+        // Check for a vendor folder directly
+        if (file_exists($vendorFolder.'/vendor')) {
+            return $vendorFolder.'/vendor';
+        }
+        // Go one level more up
+        $vendorFolder = realpath($vendorFolder.'/../');
+    } while ($vendorFolder != '/');
+
+    echo "Vendor folder not found!\n";
+    exit(1);
+}
