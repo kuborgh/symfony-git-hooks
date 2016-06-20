@@ -18,10 +18,11 @@ class PhpCsHook extends AbstractHook
         $numErr = 0;
         $files = $this->getPhpFiles($filenames);
         foreach ($files as $filename) {
-            $lintOutput = array();
-            exec('bin/phpcs -s -p --standard=Symfony2 '.escapeshellarg($gitBaseDir.'/'.$filename), $lintOutput, $return);
+            $output = array();
+            $cmd = sprintf('%s/phpcs -s -p --standard=Symfony2 %s', $this->getBinDir(), escapeshellarg($gitBaseDir.'/'.$filename));
+            exec($cmd, $output, $return);
             if ($return != 0) {
-                printf("PHP CS error: %s\n", implode("\n", $lintOutput));
+                printf("PHP CS error: %s\n", implode("\n", $output));
                 $numErr++;
             }
         }

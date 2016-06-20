@@ -55,4 +55,12 @@ abstract class AbstractHook
 
         return $gitBaseDir;
     }
+
+    /**
+     * @return string
+     */
+    protected static function getBinDir()
+    {
+        return realpath(__DIR__.'/../../../../../bin');
+    }
 }
